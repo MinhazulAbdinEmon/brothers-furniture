@@ -80,14 +80,20 @@
   /* Seamless marquee track (content is duplicated, so move by -50%) */
   .animate-marquee {
     animation: marquee 32s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
   /* Vertical scrolling columns for the hero image wall (content duplicated) */
   .animate-scroll-up {
     animation: scroll-up var(--dur, 40s) linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
   }
   .animate-scroll-down {
     animation: scroll-down var(--dur, 40s) linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
   }
   .marquee-mask {
     -webkit-mask-image: linear-gradient(
@@ -121,6 +127,21 @@
       scroll-behavior: auto;
     }
   }
+}
+
+/* Lenis smooth-scroll (recommended base styles) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 @keyframes marquee {

@@ -91,7 +91,8 @@ export default function VaporizeTextCycle({
   // Calculate device pixel ratio
   const globalDpr = useMemo(() => {
     if (typeof window !== "undefined") {
-      return window.devicePixelRatio * 1.5 || 1;
+      // Cap at 2 (instead of devicePixelRatio * 1.5) to cut canvas work on hi-DPI
+      return Math.min(window.devicePixelRatio || 1, 2);
     }
     return 1;
   }, []);

@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AnimatePresence } from "framer-motion"
+import Lenis from "lenis"
 import { Intro } from "@/components/intro"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { Navbar } from "@/components/navbar"
@@ -12,6 +13,46 @@ import { Footer } from "@/components/footer"
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false)
+
+  // Buttery momentum scrolling + smooth in-page anchor jumps (Lenis).
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const lenis = new Lenis({
+      lerp: 0.09, // frame-rate-independent smoothing — smooth but responsive
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.6,
+    })
+
+    let rafId = 0
+    const raf = (time: number) => {
+      lenis.raf(time)
+      rafId = requestAnimationFrame(raf)
+    }
+    rafId = requestAnimationFrame(raf)
+
+    // Smoothly scroll to in-page anchors instead of jumping
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement)?.closest<HTMLAnchorElement>(
+        'a[href^="#"]'
+      )
+      if (!link) return
+      const hash = link.getAttribute("href")
+      if (!hash || hash.length < 2) return
+      const target = document.querySelector(hash)
+      if (!target) return
+      e.preventDefault()
+      lenis.scrollTo(target as HTMLElement, { offset: -72, duration: 1.2 })
+    }
+    document.addEventListener("click", onClick)
+
+    return () => {
+      document.removeEventListener("click", onClick)
+      cancelAnimationFrame(rafId)
+      lenis.destroy()
+    }
+  }, [])
 
   return (
     <div className="relative min-h-screen bg-background">

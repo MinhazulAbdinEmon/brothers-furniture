@@ -1,3 +1,4 @@
+// Furniture-themed opening intro (sofa line-draw + brand name).
 import { useEffect } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 
@@ -84,7 +85,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 1.4 }}
       >
-        Brothers Used <span className="text-accent">Furniture</span>
+        Shahid Used <span className="text-accent">Furniture</span>
       </motion.h1>
     </motion.div>
   )

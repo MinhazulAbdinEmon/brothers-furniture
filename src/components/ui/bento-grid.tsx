@@ -31,12 +31,16 @@ function BentoGrid({ items }: BentoGridProps) {
                     whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     viewport={{ once: true, margin: "0px 0px -12% 0px" }}
                     transition={{ duration: 0.8, ease: EASE, delay: index * 0.09 }}
-                    whileHover={{ y: -6, transition: { duration: 0.3, ease: EASE } }}
+                    whileHover={{
+                        y: -10,
+                        scale: 1.02,
+                        transition: { duration: 0.55, ease: EASE },
+                    }}
                     className={cn(
                         "group relative p-6 rounded-2xl overflow-hidden",
-                        "border border-border bg-card",
-                        "hover:shadow-[0_18px_50px_-12px_rgba(0,0,0,0.6)]",
-                        "transition-shadow duration-500 will-change-transform",
+                        "border border-border bg-card hover:border-accent/30",
+                        "hover:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.7)]",
+                        "transition-[box-shadow,border-color] duration-500 will-change-transform",
                         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
                         {
                             "shadow-[0_18px_50px_-12px_rgba(0,0,0,0.6)]":

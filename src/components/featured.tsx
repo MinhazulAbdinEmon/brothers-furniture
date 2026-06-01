@@ -33,7 +33,7 @@ export function Featured() {
       <div className="mx-auto max-w-6xl">
         <Reveal className="mb-14 max-w-2xl">
           <p className="text-xs uppercase tracking-[0.3em] text-accent">
-            Why Brothers
+            Why Shahid
           </p>
           <h2 className="mt-4 font-serif text-4xl md:text-5xl tracking-tight text-foreground">
             A simpler way to furnish.

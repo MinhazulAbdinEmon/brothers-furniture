@@ -1,5 +1,11 @@
-import { type CSSProperties } from "react"
-import { motion, useReducedMotion, type Variants } from "framer-motion"
+import { type CSSProperties, useRef } from "react"
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type Variants,
+} from "framer-motion"
 import { Phone, MessageCircle, ChevronDown } from "lucide-react"
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect"
 import { Button } from "@/components/ui/button"
@@ -16,7 +22,7 @@ const images = [
 ]
 
 const titleWords = [
-  { text: "Brothers", className: "text-white" },
+  { text: "Shahid", className: "text-white" },
   { text: "Used", className: "text-white" },
   { text: "Furniture", className: "text-accent" },
 ]
@@ -55,18 +61,30 @@ export function Hero({ start = true }: { start?: boolean }) {
   const reduce = useReducedMotion()
   const active = start || reduce
 
+  // Subtle parallax: the image wall drifts as you scroll through the hero
+  const sectionRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  })
+  const wallY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "16%"])
+
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="relative flex min-h-[100svh] items-center justify-center overflow-hidden"
     >
-      {/* Scrolling image wall — tiles reveal one by one */}
-      <div
+      {/* Scrolling image wall — tiles reveal one by one, with scroll parallax */}
+      <motion.div
         aria-hidden
-        className="absolute inset-0 z-0 flex gap-3 px-3 md:gap-4 md:px-4"
+        style={{ y: wallY }}
+        className="pointer-events-none absolute inset-x-0 -inset-y-[16%] z-0 flex gap-3 px-3 md:gap-4 md:px-4"
       >
         {columns.map((col, ci) => {
-          const ordered = rotate(images, col.offset)
+          // Fewer tiles per column keeps the wall light; offsets still surface
+          // all 7 photos across the columns.
+          const ordered = rotate(images, col.offset).slice(0, 4)
           const tiles = [...ordered, ...ordered]
           return (
             <div key={ci} className={`min-w-0 flex-1 ${col.show} flex-col`}>
@@ -87,7 +105,8 @@ export function Hero({ start = true }: { start?: boolean }) {
                       src={src}
                       alt=""
                       loading={i < 2 ? "eager" : "lazy"}
-                      className="aspect-[3/4] w-full rounded-2xl border border-white/10 object-cover shadow-2xl"
+                      decoding="async"
+                      className="aspect-[3/4] w-full rounded-2xl border border-white/10 object-cover"
                       initial={reduce ? false : { opacity: 0, scale: 0.9 }}
                       animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.6, ease: EASE, delay: active ? delay : 0 }}
@@ -98,7 +117,7 @@ export function Hero({ start = true }: { start?: boolean }) {
             </div>
           )
         })}
-      </div>
+      </motion.div>
 
       {/* Readability overlays */}
       <div aria-hidden className="absolute inset-0 z-10 bg-black/55" />

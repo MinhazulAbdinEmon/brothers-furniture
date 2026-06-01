@@ -40,7 +40,7 @@ export function Footer() {
               {/* Brand */}
               <AnimatedContainer className="w-full max-w-sm space-y-5">
                 <a href="#top" className="font-serif text-2xl tracking-tight text-foreground">
-                  Brothers Used Furniture<span className="text-accent">.</span>
+                  Shahid Used Furniture<span className="text-accent">.</span>
                 </a>
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   Sofa sets, dining tables, bedroom sets, beds and mattresses,
@@ -160,7 +160,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-2 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row">
-          <p>© {new Date().getFullYear()} Brothers Used Furniture Trading. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Shahid Used Furniture Trading. All rights reserved.</p>
           <p>{site.location.label}</p>
         </div>
       </div>

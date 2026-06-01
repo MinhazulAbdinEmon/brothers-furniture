@@ -1,4 +1,4 @@
-// Single source of truth for all Brothers Used Furniture business content.
+// Single source of truth for all Shahid Used Furniture business content.
 
 export interface Phone {
   label: string
@@ -13,14 +13,13 @@ const phones: Phone[] = [
 ]
 
 export const site = {
-  name: "Brothers Used Furniture",
-  legalName: "Brothers Used Furniture Trading",
+  name: "Shahid Used Furniture",
+  legalName: "Shahid Used Furniture Trading",
   tagline: "Furniture, beautifully lived in.",
   location: {
     label: "Ajman, United Arab Emirates",
-    // Resolved from the shop's Google Maps listing
-    mapsUrl:
-      "https://www.google.com/maps/place/Brothers+Used+Furniture+Trading/@25.4019643,55.4454694,17z",
+    // Official Google Maps listing for Shahid Used Furniture Trdg
+    mapsUrl: "https://maps.app.goo.gl/MokovPrWTssvCoJb7",
   },
   hours: "Open daily · 8:00 AM – 11:30 PM",
   phones,

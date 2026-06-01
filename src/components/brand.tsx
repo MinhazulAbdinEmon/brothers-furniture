@@ -30,7 +30,7 @@ export function Brand() {
       {/* Vaporizing brand name */}
       <div className="h-[64px] w-full sm:h-[96px] lg:h-[140px]">
         <VaporizeTextCycle
-          texts={["Brothers Used Furniture", "Home & Office", "Open Late, Daily"]}
+          texts={["Shahid Used Furniture", "Home & Office", "Open Late, Daily"]}
           font={{
             fontFamily: "'Cormorant Garamond', serif",
             fontSize,
