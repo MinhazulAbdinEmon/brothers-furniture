@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build output (the host rebuilds this from source)
+dist/
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Generated Vite config artifacts (source of truth is vite.config.ts)
+vite.config.js
+vite.config.d.ts
+
+# Local editor / tooling config
+.claude/
+
+# OS / logs
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*

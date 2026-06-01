@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* One unified dark, cinematic palette — warm near-black + sand/bronze accent */
+  :root {
+    --background: 24 14% 6%;
+    --foreground: 30 20% 92%;
+
+    --card: 26 12% 9%;
+    --card-foreground: 30 20% 92%;
+
+    --popover: 26 12% 9%;
+    --popover-foreground: 30 20% 92%;
+
+    --primary: 30 20% 94%;
+    --primary-foreground: 24 14% 8%;
+
+    --secondary: 26 10% 16%;
+    --secondary-foreground: 30 20% 92%;
+
+    --muted: 26 8% 16%;
+    --muted-foreground: 30 8% 62%;
+
+    --accent: 30 48% 60%;
+    --accent-foreground: 24 30% 10%;
+
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 30 20% 95%;
+
+    --border: 28 10% 20%;
+    --input: 28 10% 20%;
+    --ring: 30 48% 60%;
+
+    --radius: 1rem;
+
+    /* Apple-style easing, shared by every transition on the site */
+    --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* Headlines lead with the serif display face */
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  /* Scroll-reveal primitive: starts low + transparent, animates up on .is-visible */
+  .reveal {
+    opacity: 0;
+    transform: translateY(48px);
+    transition:
+      opacity 800ms var(--ease-premium),
+      transform 800ms var(--ease-premium);
+    will-change: transform, opacity;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Section anchors clear the fixed navbar */
+  .scroll-anchor {
+    scroll-margin-top: 5rem;
+  }
+
+  /* Seamless marquee track (content is duplicated, so move by -50%) */
+  .animate-marquee {
+    animation: marquee 32s linear infinite;
+  }
+
+  /* Vertical scrolling columns for the hero image wall (content duplicated) */
+  .animate-scroll-up {
+    animation: scroll-up var(--dur, 40s) linear infinite;
+  }
+  .animate-scroll-down {
+    animation: scroll-down var(--dur, 40s) linear infinite;
+  }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .animate-marquee,
+    .animate-scroll-up,
+    .animate-scroll-down {
+      animation: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scroll-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Spinner used as a loading fallback */
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid hsl(var(--muted-foreground) / 0.3);
+  border-bottom-color: hsl(var(--accent));
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,119 @@
+"use client";
+
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+export interface BentoItem {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    status?: string;
+    tags?: string[];
+    meta?: string;
+    cta?: string;
+    colSpan?: number;
+    hasPersistentHover?: boolean;
+}
+
+interface BentoGridProps {
+    items: BentoItem[];
+}
+
+function BentoGrid({ items }: BentoGridProps) {
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+            {items.map((item, index) => (
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+                    transition={{ duration: 0.8, ease: EASE, delay: index * 0.09 }}
+                    whileHover={{ y: -6, transition: { duration: 0.3, ease: EASE } }}
+                    className={cn(
+                        "group relative p-6 rounded-2xl overflow-hidden",
+                        "border border-border bg-card",
+                        "hover:shadow-[0_18px_50px_-12px_rgba(0,0,0,0.6)]",
+                        "transition-shadow duration-500 will-change-transform",
+                        item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
+                        {
+                            "shadow-[0_18px_50px_-12px_rgba(0,0,0,0.6)]":
+                                item.hasPersistentHover,
+                        }
+                    )}
+                >
+                    <div
+                        className={`absolute inset-0 ${
+                            item.hasPersistentHover
+                                ? "opacity-100"
+                                : "opacity-0 group-hover:opacity-100"
+                        } transition-opacity duration-300`}
+                    >
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--accent)/0.06)_1px,transparent_1px)] bg-[length:6px_6px]" />
+                    </div>
+
+                    <div className="relative flex flex-col space-y-4">
+                        <div className="flex items-center justify-between">
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-accent/10 text-accent transition-all duration-300 group-hover:bg-accent/20">
+                                {item.icon}
+                            </div>
+                            {item.status && (
+                                <span
+                                    className={cn(
+                                        "text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm",
+                                        "bg-secondary text-muted-foreground",
+                                        "transition-colors duration-300 group-hover:text-foreground"
+                                    )}
+                                >
+                                    {item.status}
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="space-y-2">
+                            <h3 className="font-medium text-foreground tracking-tight text-lg">
+                                {item.title}
+                                {item.meta && (
+                                    <span className="ml-2 text-xs text-muted-foreground font-normal">
+                                        {item.meta}
+                                    </span>
+                                )}
+                            </h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed font-[425]">
+                                {item.description}
+                            </p>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-2">
+                            <div className="flex items-center flex-wrap gap-2 text-xs text-muted-foreground">
+                                {item.tags?.map((tag, i) => (
+                                    <span
+                                        key={i}
+                                        className="px-2 py-1 rounded-md bg-secondary backdrop-blur-sm transition-all duration-200"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                            <span className="text-xs text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                                {item.cta || "Explore →"}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div
+                        className={`absolute inset-0 -z-10 rounded-2xl p-px bg-gradient-to-br from-transparent via-accent/10 to-transparent ${
+                            item.hasPersistentHover
+                                ? "opacity-100"
+                                : "opacity-0 group-hover:opacity-100"
+                        } transition-opacity duration-300`}
+                    />
+                </motion.div>
+            ))}
+        </div>
+    );
+}
+
+export { BentoGrid };
