@@ -37,19 +37,58 @@ const GlowCard: React.FC<GlowCardProps> = ({
   const innerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const syncPointer = (e: PointerEvent) => {
-      const { clientX: x, clientY: y } = e;
+    const card = cardRef.current;
+    if (!card) return;
 
-      if (cardRef.current) {
-        cardRef.current.style.setProperty('--x', x.toFixed(2));
-        cardRef.current.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
-        cardRef.current.style.setProperty('--y', y.toFixed(2));
-        cardRef.current.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
-      }
+    const setPos = (x: number, y: number) => {
+      card.style.setProperty('--x', x.toFixed(2));
+      card.style.setProperty('--xp', (x / window.innerWidth).toFixed(3));
+      card.style.setProperty('--y', y.toFixed(2));
+      card.style.setProperty('--yp', (y / window.innerHeight).toFixed(3));
     };
 
-    document.addEventListener('pointermove', syncPointer);
-    return () => document.removeEventListener('pointermove', syncPointer);
+    // Devices with a real pointer: the light follows the cursor.
+    if (window.matchMedia('(hover: hover)').matches) {
+      const syncPointer = (e: PointerEvent) => setPos(e.clientX, e.clientY);
+      document.addEventListener('pointermove', syncPointer);
+      return () => document.removeEventListener('pointermove', syncPointer);
+    }
+
+    // Touch / no-hover (mobile): gently orbit the light around each card so
+    // they glow on their own. Honors reduced-motion and pauses when offscreen.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const r = card.getBoundingClientRect();
+      setPos(r.left + r.width / 2, r.top + r.height * 0.35);
+      return;
+    }
+
+    let raf = 0;
+    let visible = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    io.observe(card);
+
+    const start = performance.now();
+    const loop = (t: number) => {
+      if (visible) {
+        const el = (t - start) / 1000;
+        const r = card.getBoundingClientRect();
+        const x = r.left + r.width * (0.5 + 0.4 * Math.sin(el * 0.6));
+        const y = r.top + r.height * (0.5 + 0.4 * Math.cos(el * 0.45));
+        setPos(x, y);
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+    };
   }, []);
 
   const { base, spread } = glowColorMap[glowColor];
