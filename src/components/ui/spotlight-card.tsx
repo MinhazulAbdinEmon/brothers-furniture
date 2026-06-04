@@ -54,41 +54,12 @@ const GlowCard: React.FC<GlowCardProps> = ({
       return () => document.removeEventListener('pointermove', syncPointer);
     }
 
-    // Touch / no-hover (mobile): gently orbit the light around each card so
-    // they glow on their own. Honors reduced-motion and pauses when offscreen.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const r = card.getBoundingClientRect();
-      setPos(r.left + r.width / 2, r.top + r.height * 0.35);
-      return;
-    }
-
-    let raf = 0;
-    let visible = true;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry.isIntersecting;
-      },
-      { threshold: 0 }
-    );
-    io.observe(card);
-
-    const start = performance.now();
-    const loop = (t: number) => {
-      if (visible) {
-        const el = (t - start) / 1000;
-        const r = card.getBoundingClientRect();
-        const x = r.left + r.width * (0.5 + 0.4 * Math.sin(el * 0.6));
-        const y = r.top + r.height * (0.5 + 0.4 * Math.cos(el * 0.45));
-        setPos(x, y);
-      }
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      io.disconnect();
-    };
+    // Touch / no-hover (mobile): set a single static glow position. We used to
+    // animate this every frame, but a per-frame rAF loop recomputing gradients
+    // on each card made scrolling laggy on phones — a static glow looks just as
+    // premium without the cost.
+    const r = card.getBoundingClientRect();
+    setPos(r.left + r.width / 2, r.top + r.height * 0.35);
   }, []);
 
   const { base, spread } = glowColorMap[glowColor];

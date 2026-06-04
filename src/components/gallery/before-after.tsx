@@ -60,7 +60,7 @@ export function BeforeAfter({ originalSrc, enhancedSrc, alt }: BeforeAfterProps)
         className="absolute inset-0 h-full w-full object-cover"
         draggable={false}
       />
-      <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+      <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white shadow-sm">
         Original Photo
       </span>
 
@@ -75,7 +75,7 @@ export function BeforeAfter({ originalSrc, enhancedSrc, alt }: BeforeAfterProps)
           className="absolute inset-0 h-full w-full object-cover"
           draggable={false}
         />
-        <span className="pointer-events-none absolute right-3 top-3 rounded-full bg-accent/90 px-3 py-1 text-xs font-medium text-accent-foreground backdrop-blur-sm">
+        <span className="pointer-events-none absolute right-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground shadow-sm">
           Enhanced View
         </span>
       </div>

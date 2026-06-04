@@ -44,20 +44,18 @@ export function Reveal({
 }: RevealProps) {
   const reduce = useReducedMotion()
 
+  // Only opacity + transform animate — no blur/scale, which are expensive to
+  // composite on mobile and were a source of scroll jank.
   const variants: Variants = {
     hidden: {
       opacity: 0,
-      filter: "blur(10px)",
-      scale: 0.985,
       ...offset(direction, distance),
     },
     visible: {
       opacity: 1,
-      filter: "blur(0px)",
-      scale: 1,
       x: 0,
       y: 0,
-      transition: { duration: 0.9, ease: EASE, delay: delay / 1000 },
+      transition: { duration: 0.6, ease: EASE, delay: delay / 1000 },
     },
   }
 

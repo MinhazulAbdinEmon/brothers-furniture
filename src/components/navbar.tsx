@@ -3,15 +3,12 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Phone } from "lucide-react"
 import { site, primaryPhone } from "@/lib/site"
+import { Link } from "@/lib/router"
+import { CATEGORIES } from "@/lib/categories-registry"
 
 const links = [
-  { label: "Collection", href: "#categories" },
-  { label: "Sofas", href: "#sofas" },
-  { label: "Fridges", href: "#fridges" },
-  { label: "Ovens", href: "#ovens" },
-  { label: "Washers", href: "#washing-machines" },
-  { label: "Wardrobes", href: "#wardrobes" },
-  { label: "Visit", href: "#visit" },
+  ...CATEGORIES.map((c) => ({ label: c.label, to: `/${c.slug}` })),
+  { label: "All", to: "/all-products" },
 ]
 
 export function Navbar() {
@@ -29,31 +26,39 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-[background-color,backdrop-filter,border-color] duration-500 ease-out",
+        "fixed top-0 inset-x-0 z-50 transition-[background-color,border-color] duration-500 ease-out",
         scrolled
-          ? "bg-background/70 backdrop-blur-xl border-b border-border"
+          ? "bg-background/95 border-b border-border"
           : "bg-transparent border-b border-transparent",
         mounted ? "opacity-100" : "opacity-0"
       )}
-      style={{ transitionProperty: "opacity, background-color, backdrop-filter, border-color" }}
+      style={{ transitionProperty: "opacity, background-color, border-color" }}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
+        <Link
+          to="/"
+          className="shrink-0 font-serif text-lg text-foreground transition-colors hover:text-accent"
+          aria-label={`${site.name} — home`}
+        >
+          {site.name}
+        </Link>
+
         <div className="hidden items-center gap-6 lg:flex">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
+            <Link
+              key={l.to}
+              to={l.to}
               className="text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
 
         <Button
           asChild
           size="sm"
-          className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
+          className="shrink-0 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
         >
           <a href={`tel:${primaryPhone.tel}`} aria-label={`Call ${site.name}`}>
             <Phone className="mr-2 size-4" />

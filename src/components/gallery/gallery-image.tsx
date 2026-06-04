@@ -44,10 +44,6 @@ export function GalleryImage({
           : undefined
       }
     >
-      {/* Soft blur over the placeholder until the real image fades in */}
-      {lqip && !loaded && (
-        <div className="absolute inset-0 backdrop-blur-xl" aria-hidden="true" />
-      )}
       <img
         src={src}
         alt={alt}

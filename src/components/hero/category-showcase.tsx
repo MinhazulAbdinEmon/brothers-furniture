@@ -4,6 +4,7 @@ import { Sofa, BedDouble, Refrigerator, WashingMachine } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { OvenIcon } from "@/components/ovens/oven-icons"
 import { WardrobeIcon } from "@/components/wardrobes/wardrobe-icons"
+import { Link } from "@/lib/router"
 
 export interface HeroCategory {
   key: string
@@ -25,7 +26,7 @@ export const HERO_CATEGORIES: HeroCategory[] = [
     Icon: Sofa,
     image: "/sofas/sofa-002-enhanced.webp",
     alt: "Mustard three-seater sofa",
-    href: "#sofas",
+    href: "/sofas",
   },
   {
     key: "beds",
@@ -33,7 +34,7 @@ export const HERO_CATEGORIES: HeroCategory[] = [
     Icon: BedDouble,
     image: "/covers/bedroom.webp",
     alt: "Bedroom with a double bed",
-    href: "#categories",
+    href: "/all-products",
     placeholder: true,
   },
   {
@@ -42,7 +43,7 @@ export const HERO_CATEGORIES: HeroCategory[] = [
     Icon: Refrigerator,
     image: "/fridges/fridge-002-enhanced.webp",
     alt: "Silver double-door refrigerator",
-    href: "#fridges",
+    href: "/fridges",
   },
   {
     key: "ovens",
@@ -50,7 +51,7 @@ export const HERO_CATEGORIES: HeroCategory[] = [
     Icon: OvenIcon,
     image: "/ovens/oven-003-enhanced.webp",
     alt: "Black electric countertop oven",
-    href: "#ovens",
+    href: "/ovens",
   },
   {
     key: "washers",
@@ -58,7 +59,7 @@ export const HERO_CATEGORIES: HeroCategory[] = [
     Icon: WashingMachine,
     image: "/washing-machines/washer-002-enhanced.webp",
     alt: "White front-load washing machine",
-    href: "#washing-machines",
+    href: "/washing-machines",
   },
   {
     key: "wardrobes",
@@ -66,7 +67,7 @@ export const HERO_CATEGORIES: HeroCategory[] = [
     Icon: WardrobeIcon,
     image: "/hero/wardrobe-demo.webp",
     alt: "Sage green wardrobe cabinet",
-    href: "#wardrobes",
+    href: "/wardrobes",
   },
 ]
 
@@ -149,7 +150,7 @@ export function CategoryShowcase() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-3 rounded-2xl border border-border bg-card/85 px-4 py-2.5 backdrop-blur-md"
+            className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-2.5"
           >
             <span className="flex size-9 items-center justify-center rounded-xl bg-accent/15 text-accent">
               <current.Icon className="size-5" />
@@ -184,13 +185,13 @@ export function CategoryShortcuts({ className }: { className?: string }) {
       <ul className="flex flex-wrap gap-2.5">
         {HERO_CATEGORIES.map((c) => (
           <li key={c.key}>
-            <a
-              href={c.href}
+            <Link
+              to={c.href}
               className="flex min-h-[44px] items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent/50 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <c.Icon className="size-5 text-accent" aria-hidden />
               {c.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
