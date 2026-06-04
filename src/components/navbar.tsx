@@ -6,8 +6,11 @@ import { site, primaryPhone } from "@/lib/site"
 
 const links = [
   { label: "Collection", href: "#categories" },
-  { label: "Delivery", href: "#delivery" },
-  { label: "Featured", href: "#featured" },
+  { label: "Sofas", href: "#sofas" },
+  { label: "Fridges", href: "#fridges" },
+  { label: "Ovens", href: "#ovens" },
+  { label: "Washers", href: "#washing-machines" },
+  { label: "Wardrobes", href: "#wardrobes" },
   { label: "Visit", href: "#visit" },
 ]
 
@@ -35,7 +38,7 @@ export function Navbar() {
       style={{ transitionProperty: "opacity, background-color, backdrop-filter, border-color" }}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-6 lg:flex">
           {links.map((l) => (
             <a
               key={l.href}

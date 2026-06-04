@@ -17,7 +17,10 @@ const items: BentoItem[] = [
     icon: <Sofa className="w-5 h-5" />,
     tags: ["Sofa Sets", "Coffee Tables"],
     hasPersistentHover: true,
-    cta: "Ask in store →",
+    cta: "View sofas →",
+    href: "#sofas",
+    image: "/covers/living-room.webp",
+    imageAlt: "A living room with a sofa set",
   },
   {
     title: "Dining",
@@ -26,6 +29,8 @@ const items: BentoItem[] = [
     icon: <UtensilsCrossed className="w-5 h-5" />,
     tags: ["Dining Tables", "Chairs"],
     cta: "Ask in store →",
+    image: "/covers/dining.webp",
+    imageAlt: "A dining table with chairs",
   },
   {
     title: "Bedroom",
@@ -34,6 +39,8 @@ const items: BentoItem[] = [
     icon: <BedDouble className="w-5 h-5" />,
     tags: ["Bedroom Sets", "Double Beds", "Single Beds", "Mattresses"],
     cta: "Ask in store →",
+    image: "/covers/bedroom.webp",
+    imageAlt: "A bedroom with a double bed",
   },
   {
     title: "Office",
@@ -42,14 +49,19 @@ const items: BentoItem[] = [
     icon: <Briefcase className="w-5 h-5" />,
     tags: ["Office Tables", "Chairs"],
     cta: "Ask in store →",
+    image: "/covers/office.webp",
+    imageAlt: "An office chair and desk",
   },
   {
     title: "Storage & Cabinets",
     description:
-      "Cupboards and wardrobes to keep every room tidy and organised.",
+      "Wardrobes and cupboards to keep every room tidy and organised.",
     icon: <Boxes className="w-5 h-5" />,
-    tags: ["Cupboards", "Wardrobes"],
-    cta: "Ask in store →",
+    tags: ["Wardrobes", "Cupboards"],
+    cta: "View wardrobes →",
+    href: "#wardrobes",
+    image: "/wardrobes/wardrobe-001-enhanced.webp",
+    imageAlt: "A white wardrobe",
   },
   {
     title: "Appliances",
@@ -57,7 +69,10 @@ const items: BentoItem[] = [
       "Fridges, washing machines, cookers, gas cookers and ovens — checked and ready.",
     icon: <WashingMachine className="w-5 h-5" />,
     tags: ["Fridges", "Washing Machines", "Gas Cookers", "Ovens"],
-    cta: "Ask in store →",
+    cta: "View appliances →",
+    href: "#fridges",
+    image: "/covers/appliances.webp",
+    imageAlt: "Home appliances including fridge and washing machine",
   },
 ]
 

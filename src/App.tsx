@@ -7,6 +7,11 @@ import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
 import { Brand } from "@/components/brand"
 import { Categories } from "@/components/categories"
+import { Sofas } from "@/components/sofas"
+import { Fridges } from "@/components/fridges"
+import { Ovens } from "@/components/ovens"
+import { WashingMachines } from "@/components/washing-machines"
+import { Wardrobes } from "@/components/wardrobes"
 import { Delivery } from "@/components/delivery"
 import { Featured } from "@/components/featured"
 import { Footer } from "@/components/footer"
@@ -69,6 +74,11 @@ export default function App() {
           <Hero start={introDone} />
           <Brand />
           <Categories />
+          <Sofas />
+          <Fridges />
+          <Ovens />
+          <WashingMachines />
+          <Wardrobes />
           <Delivery />
           <Featured />
         </main>

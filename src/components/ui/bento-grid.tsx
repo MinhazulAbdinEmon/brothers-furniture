@@ -15,6 +15,12 @@ export interface BentoItem {
     cta?: string;
     colSpan?: number;
     hasPersistentHover?: boolean;
+    /** In-page anchor (e.g. "#sofas"). Makes the whole card a clickable link. */
+    href?: string;
+    /** Real product photo shown at the top of the card — lets visitors who
+        can't read recognise the category by sight. */
+    image?: string;
+    imageAlt?: string;
 }
 
 interface BentoGridProps {
@@ -59,6 +65,17 @@ function BentoGrid({ items }: BentoGridProps) {
                     </div>
 
                     <div className="relative flex flex-col space-y-4">
+                        {item.image && (
+                            <div className="relative -mx-2 -mt-2 mb-1 aspect-[16/10] overflow-hidden rounded-xl bg-secondary">
+                                <img
+                                    src={item.image}
+                                    alt={item.imageAlt || item.title}
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                />
+                            </div>
+                        )}
                         <div className="flex items-center justify-between">
                             <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-accent/10 text-accent transition-all duration-300 group-hover:bg-accent/20">
                                 {item.icon}
@@ -101,11 +118,27 @@ function BentoGrid({ items }: BentoGridProps) {
                                     </span>
                                 ))}
                             </div>
-                            <span className="text-xs text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span
+                                className={cn(
+                                    "text-xs text-accent transition-opacity",
+                                    item.href
+                                        ? "opacity-100"
+                                        : "opacity-0 group-hover:opacity-100"
+                                )}
+                            >
                                 {item.cta || "Explore →"}
                             </span>
                         </div>
                     </div>
+
+                    {/* Whole-card link (stretched) when the category has a section */}
+                    {item.href && (
+                        <a
+                            href={item.href}
+                            aria-label={`${item.title} — view`}
+                            className="absolute inset-0 z-20 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                        />
+                    )}
 
                     <div
                         className={`absolute inset-0 -z-10 rounded-2xl p-px bg-gradient-to-br from-transparent via-accent/10 to-transparent ${
