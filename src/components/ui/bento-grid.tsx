@@ -33,20 +33,15 @@ function BentoGrid({ items }: BentoGridProps) {
             {items.map((item, index) => (
                 <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{ opacity: 0, y: 32 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-                    transition={{ duration: 0.8, ease: EASE, delay: index * 0.09 }}
-                    whileHover={{
-                        y: -10,
-                        scale: 1.02,
-                        transition: { duration: 0.55, ease: EASE },
-                    }}
+                    transition={{ duration: 0.5, ease: EASE, delay: index * 0.06 }}
                     className={cn(
                         "group relative p-6 rounded-2xl overflow-hidden",
                         "border border-border bg-card hover:border-accent/30",
                         "hover:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.7)]",
-                        "transition-[box-shadow,border-color] duration-500 will-change-transform",
+                        "transition-[box-shadow,border-color,transform] duration-500 md:hover:-translate-y-1.5",
                         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
                         {
                             "shadow-[0_18px_50px_-12px_rgba(0,0,0,0.6)]":
@@ -83,7 +78,7 @@ function BentoGrid({ items }: BentoGridProps) {
                             {item.status && (
                                 <span
                                     className={cn(
-                                        "text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm",
+                                        "text-xs font-medium px-2.5 py-1 rounded-full",
                                         "bg-secondary text-muted-foreground",
                                         "transition-colors duration-300 group-hover:text-foreground"
                                     )}
@@ -112,7 +107,7 @@ function BentoGrid({ items }: BentoGridProps) {
                                 {item.tags?.map((tag, i) => (
                                     <span
                                         key={i}
-                                        className="px-2 py-1 rounded-md bg-secondary backdrop-blur-sm transition-all duration-200"
+                                        className="px-2 py-1 rounded-md bg-secondary"
                                     >
                                         {tag}
                                     </span>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import {
   X,
@@ -46,6 +46,24 @@ export function ProductModal({
   const images = tab === "original" ? product.originalImages : product.enhancedImages
   const count = images.length
 
+  // Make the phone's Back button / gesture close the modal instead of leaving
+  // the page. We push one history entry when the modal opens; popping it (via
+  // the Back button, or our own close controls calling history.back()) closes
+  // the modal. `requestClose` is what every close control calls.
+  const onCloseRef = useRef(onClose)
+  onCloseRef.current = onClose
+  const pushedRef = useRef(false)
+  const requestClose = useCallback(() => window.history.back(), [])
+  useEffect(() => {
+    if (!pushedRef.current) {
+      window.history.pushState({ productModal: true }, "")
+      pushedRef.current = true
+    }
+    const onPop = () => onCloseRef.current()
+    window.addEventListener("popstate", onPop)
+    return () => window.removeEventListener("popstate", onPop)
+  }, [])
+
   // Lock background scroll + trap focus; Escape and arrow keys for navigation.
   useEffect(() => {
     const prevOverflow = document.body.style.overflow
@@ -54,7 +72,7 @@ export function ProductModal({
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose()
+        requestClose()
       } else if (e.key === "ArrowLeft" && tab !== "compare") {
         setIndex((i) => (i - 1 + count) % count)
       } else if (e.key === "ArrowRight" && tab !== "compare") {
@@ -80,7 +98,7 @@ export function ProductModal({
       document.body.style.overflow = prevOverflow
       document.removeEventListener("keydown", onKey)
     }
-  }, [onClose, count, tab])
+  }, [requestClose, count, tab])
 
   const goTab = (t: Tab) => {
     setTab(t)
@@ -126,12 +144,12 @@ export function ProductModal({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[60] flex items-stretch justify-center bg-black/70 backdrop-blur-sm md:items-center md:p-6"
+      className="fixed inset-0 z-[60] flex items-stretch justify-center bg-black/80 md:items-center md:p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: reduce ? 0 : 0.25 }}
-      onClick={onClose}
+      onClick={requestClose}
     >
       <motion.div
         ref={panelRef}
@@ -147,7 +165,7 @@ export function ProductModal({
         className="relative flex h-full w-full max-w-3xl flex-col overflow-y-auto bg-card text-card-foreground md:h-auto md:max-h-[90vh] md:rounded-3xl md:border md:border-border"
       >
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-border bg-card/95 px-5 py-3 backdrop-blur">
+        <div className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-border bg-card px-5 py-3">
           <div className="flex min-w-0 items-center gap-2.5">
             <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
               {icon}
@@ -164,7 +182,7 @@ export function ProductModal({
           </div>
           <button
             ref={closeRef}
-            onClick={onClose}
+            onClick={requestClose}
             aria-label="Close"
             className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
@@ -237,7 +255,7 @@ export function ProductModal({
 
               <span
                 className={cn(
-                  "pointer-events-none absolute left-3 top-3 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium backdrop-blur-sm",
+                  "pointer-events-none absolute left-3 top-3 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium shadow-sm",
                   tab === "original"
                     ? "bg-black/60 text-white"
                     : "bg-accent/90 text-accent-foreground"
@@ -256,14 +274,14 @@ export function ProductModal({
                   <button
                     onClick={prev}
                     aria-label="Previous photo"
-                    className="absolute left-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur transition-colors hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                    className="absolute left-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <ChevronLeft className="size-6" />
                   </button>
                   <button
                     onClick={next}
                     aria-label="Next photo"
-                    className="absolute right-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur transition-colors hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                    className="absolute right-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <ChevronRight className="size-6" />
                   </button>
@@ -315,7 +333,7 @@ export function ProductModal({
         )}
 
         {/* Contact actions — large, fixed at the bottom of the panel */}
-        <div className="sticky bottom-0 z-20 mt-4 grid grid-cols-2 gap-3 border-t border-border bg-card/95 px-5 py-4 backdrop-blur">
+        <div className="sticky bottom-0 z-20 mt-4 grid grid-cols-2 gap-3 border-t border-border bg-card px-5 py-4">
           <button
             type="button"
             onClick={() =>

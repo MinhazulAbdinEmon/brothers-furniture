@@ -44,7 +44,7 @@ export function ProductCard({
 
         {/* Enhanced View badge — only when the hero is actually an enhanced photo */}
         {hasEnhanced && (
-          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-accent/90 px-2.5 py-1 text-xs font-medium text-accent-foreground backdrop-blur-sm">
+          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-accent-foreground shadow-sm">
             <Gem className="size-3.5" />
             Enhanced View
           </span>
@@ -52,7 +52,7 @@ export function ProductCard({
 
         {/* Real-photo-available indicator */}
         {hasOriginal && (
-          <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
+          <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-xs font-medium text-white shadow-sm">
             <Camera className="size-3.5" />
             Real photo
           </span>

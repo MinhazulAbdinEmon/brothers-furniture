@@ -81,9 +81,9 @@ export function Intro({ onDone }: { onDone: () => void }) {
       {/* Brand name */}
       <motion.h1
         className="relative px-6 text-center font-serif text-3xl tracking-tight text-white md:text-5xl"
-        initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 1.4 }}
+        initial={reduce ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.4 }}
       >
         Shahid Used <span className="text-accent">Furniture</span>
       </motion.h1>

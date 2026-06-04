@@ -182,10 +182,10 @@ function AnimatedContainer({ delay = 0.1, children, ...props }: AnimatedContaine
 
   return (
     <motion.div
-      initial={{ filter: "blur(4px)", translateY: -8, opacity: 0 }}
-      whileInView={{ filter: "blur(0px)", translateY: 0, opacity: 1 }}
+      initial={{ translateY: -8, opacity: 0 }}
+      whileInView={{ translateY: 0, opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ delay, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ delay, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       {...props}
     >
       {children}
