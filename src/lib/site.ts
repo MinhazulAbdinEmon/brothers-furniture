@@ -33,3 +33,10 @@ export const site = {
 }
 
 export const primaryPhone = phones.find((p) => p.primary) ?? phones[0]
+
+/** WhatsApp deep link with an optional pre-filled message. */
+export function waLink(message?: string): string {
+  return message
+    ? `${site.whatsapp}?text=${encodeURIComponent(message)}`
+    : site.whatsapp
+}
