@@ -56,7 +56,7 @@ export type SectionId =
   | "ovens"
   | "washing-machines"
   | "wardrobes"
-  | "dinningtables"
+  | "dinning-tables"
 
 export interface ProductEntry {
   /** Unique id, e.g. "sofa-024". Used in WhatsApp messages. */
