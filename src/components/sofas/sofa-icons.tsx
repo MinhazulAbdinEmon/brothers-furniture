@@ -2,7 +2,6 @@
 // even at a glance, for visitors who rely on pictures rather than words.
 // Same 24×24 / currentColor style as lucide-react, so they sit beside it cleanly.
 import type { ReactNode, SVGProps } from "react"
-import type { SofaCategory } from "@/lib/sofas"
 
 function Svg(props: SVGProps<SVGSVGElement>) {
   return (
@@ -81,12 +80,13 @@ export const SingleChairIcon = (p: SVGProps<SVGSVGElement>) => (
   </Svg>
 )
 
-/** Icon for a filter value (null = "All Sofas"). */
+/** Icon for a filter value (null = "All Sofas"). Unknown new types fall back
+ *  to the generic three-seater outline. */
 export function FilterIcon({
   value,
   className,
 }: {
-  value: SofaCategory | null
+  value: string | null
   className?: string
 }) {
   switch (value) {
@@ -96,11 +96,11 @@ export function FilterIcon({
       return <SofaSetIcon className={className} />
     case "l-shaped":
       return <LShapedIcon className={className} />
-    case "3-seater":
-      return <ThreeSeaterIcon className={className} />
     case "2-seater":
       return <TwoSeaterIcon className={className} />
     case "single":
       return <SingleChairIcon className={className} />
+    default:
+      return <ThreeSeaterIcon className={className} />
   }
 }

@@ -5,8 +5,17 @@ import { Delivery } from "@/components/delivery"
 import { Featured } from "@/components/featured"
 import { ProductGallery } from "@/components/gallery/product-gallery"
 import { CATEGORIES } from "@/lib/categories-registry"
+import type { Product } from "@/lib/catalog"
 
 const PREVIEW_COUNT = 4
+
+/** Products marked `featured: true` lead their homepage preview; everything
+ *  else keeps its catalog order (sort is stable). */
+function featuredFirst(products: Product[]): Product[] {
+  return [...products].sort(
+    (a, b) => Number(b.featured) - Number(a.featured)
+  )
+}
 
 /** Homepage: hero → visual category nav → a short preview of each category
  *  (4 products + View All + WhatsApp) → trust sections. Full catalogues live
@@ -24,7 +33,7 @@ export function HomePage({ start }: { start: boolean }) {
           eyebrow={c.eyebrow}
           title={c.title}
           subtitle={c.subtitle}
-          products={c.products}
+          products={featuredFirst(c.products)}
           icon={c.productIcon}
           categoryLabel={c.categoryLabel}
           previewCount={PREVIEW_COUNT}

@@ -22,6 +22,7 @@ export const site = {
     mapsUrl: "https://maps.app.goo.gl/MokovPrWTssvCoJb7",
   },
   hours: "Open daily · 8:00 AM – 11:30 PM",
+  currency: "AED",
   phones,
   whatsapp: "https://wa.me/971556282836",
   // email: "",  // pending — to be added once confirmed

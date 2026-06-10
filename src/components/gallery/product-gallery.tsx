@@ -63,7 +63,7 @@ export function ProductGallery({
   const [showAll, setShowAll] = useState(false)
 
   const showFilters = !!filters && filters.length > 1
-  const matched = filter ? products.filter((p) => p.category === filter) : products
+  const matched = filter ? products.filter((p) => p.type === filter) : products
   const capped = previewCount && !showAll ? matched.slice(0, previewCount) : matched
   const hiddenCount = matched.length - capped.length
   const open = products.find((p) => p.id === openId) ?? null
@@ -117,8 +117,8 @@ export function ProductGallery({
             <ProductCard
               key={product.id}
               product={product}
-              categoryLabel={categoryLabel(product.category)}
-              icon={icon(product.category, "size-4")}
+              categoryLabel={categoryLabel(product.type)}
+              icon={icon(product.type, "size-4")}
               onOpen={() => setOpenId(product.id)}
             />
           ))}
@@ -167,8 +167,8 @@ export function ProductGallery({
           <ProductModal
             key={open.id}
             product={open}
-            categoryLabel={categoryLabel(open.category)}
-            icon={icon(open.category, "size-5")}
+            categoryLabel={categoryLabel(open.type)}
+            icon={icon(open.type, "size-5")}
             onClose={() => setOpenId(null)}
           />
         )}

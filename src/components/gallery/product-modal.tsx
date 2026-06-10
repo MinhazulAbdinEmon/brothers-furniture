@@ -10,10 +10,11 @@ import {
   Phone,
   MessageCircle,
   ShieldCheck,
+  ImageOff,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { primaryPhone } from "@/lib/site"
-import { heroImage, shareWithPhoto, type Product } from "@/lib/catalog"
+import { formatPrice, shareWithPhoto, type Product } from "@/lib/catalog"
 import { GalleryImage } from "./gallery-image"
 import { BeforeAfter } from "./before-after"
 
@@ -33,9 +34,10 @@ export function ProductModal({
   onClose: () => void
 }) {
   const reduce = useReducedMotion()
-  const hasEnhanced = product.enhancedImages.length > 0
-  const hasOriginal = product.originalImages.length > 0
+  const hasEnhanced = product.images.length > 0
+  const hasOriginal = product.realPhotos.length > 0
   const canCompare = hasEnhanced && hasOriginal
+  const hasAnyPhoto = hasEnhanced || hasOriginal
 
   const [tab, setTab] = useState<Tab>(hasEnhanced ? "enhanced" : "original")
   const [index, setIndex] = useState(0)
@@ -43,7 +45,7 @@ export function ProductModal({
   const closeRef = useRef<HTMLButtonElement>(null)
   const swipeStart = useRef<number | null>(null)
 
-  const images = tab === "original" ? product.originalImages : product.enhancedImages
+  const images = tab === "original" ? product.realPhotos : product.images
   const count = images.length
 
   // Make the phone's Back button / gesture close the modal instead of leaving
@@ -229,10 +231,16 @@ export function ProductModal({
         <div className="px-5 pt-4">
           {tab === "compare" ? (
             <BeforeAfter
-              originalSrc={product.originalImages[0]}
-              enhancedSrc={product.enhancedImages[0]}
+              originalSrc={product.realPhotos[0]}
+              enhancedSrc={product.images[0]}
               alt={product.name}
             />
+          ) : !hasAnyPhoto ? (
+            /* Clean placeholder when the product has no photo yet */
+            <div className="flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 rounded-2xl bg-secondary text-muted-foreground">
+              <ImageOff className="size-10" />
+              <span className="text-sm font-medium">Photo coming soon</span>
+            </div>
           ) : (
             <div
               className="relative aspect-[4/3] w-full touch-pan-y overflow-hidden rounded-2xl bg-secondary"
@@ -321,6 +329,42 @@ export function ProductModal({
           )}
         </div>
 
+        {/* Price / condition / description — each part hides when not set */}
+        {(product.price != null ||
+          product.condition ||
+          product.description ||
+          !product.available) && (
+          <div className="mx-5 mt-4 space-y-2">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              {product.price != null && (
+                <span className="text-2xl font-semibold text-foreground">
+                  {formatPrice(product.price)}
+                </span>
+              )}
+              {product.price != null && product.oldPrice != null && (
+                <span className="text-base text-muted-foreground line-through">
+                  {formatPrice(product.oldPrice)}
+                </span>
+              )}
+              {product.condition && (
+                <span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+                  {product.condition}
+                </span>
+              )}
+              {!product.available && (
+                <span className="rounded-full bg-destructive px-3 py-1 text-xs font-semibold text-destructive-foreground">
+                  Sold Out
+                </span>
+              )}
+            </div>
+            {product.description && (
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {product.description}
+              </p>
+            )}
+          </div>
+        )}
+
         {/* Trust message — only meaningful when a real photo exists */}
         {hasOriginal && (
           <div className="mx-5 mt-4 flex items-start gap-2.5 rounded-2xl border border-border bg-secondary/50 px-4 py-3">
@@ -336,13 +380,7 @@ export function ProductModal({
         <div className="sticky bottom-0 z-20 mt-4 grid grid-cols-2 gap-3 border-t border-border bg-card px-5 py-4">
           <button
             type="button"
-            onClick={() =>
-              shareWithPhoto({
-                name: product.name,
-                id: product.id,
-                imagePath: heroImage(product),
-              })
-            }
+            onClick={() => shareWithPhoto(product)}
             aria-label={`Message us on WhatsApp about ${product.name}, with the photo`}
             className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#25D366] text-base font-semibold text-black transition-transform hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-[0.98]"
           >

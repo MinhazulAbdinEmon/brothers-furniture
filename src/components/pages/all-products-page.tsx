@@ -4,10 +4,10 @@ import { ProductGallery, type Filter } from "@/components/gallery/product-galler
 import { CATEGORIES } from "@/lib/categories-registry"
 import type { Product } from "@/lib/catalog"
 
-// Flatten every category's products, re-tagging each with its top-level slug so
-// the gallery can filter by category (e.g. "sofas", "fridges").
+// Flatten every category's products, re-tagging each `type` with its top-level
+// slug so the gallery can filter by section (e.g. "sofas", "fridges").
 const allProducts: Product[] = CATEGORIES.flatMap((c) =>
-  c.products.map((p) => ({ ...p, category: c.slug }))
+  c.products.map((p) => ({ ...p, type: c.slug }))
 )
 
 const filters: Filter[] = [
