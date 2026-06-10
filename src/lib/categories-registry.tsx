@@ -7,7 +7,7 @@
 // only shows when at least one product uses that `type`, and a brand-new
 // `type` value automatically gets its own button.
 import type { ReactNode } from "react"
-import { Sofa, Refrigerator, WashingMachine } from "lucide-react"
+import { Sofa, Refrigerator, WashingMachine, Utensils } from "lucide-react"
 import { FilterIcon } from "@/components/sofas/sofa-icons"
 import { FridgeFilterIcon } from "@/components/fridges/fridge-icons"
 import { OvenFilterIcon } from "@/components/ovens/oven-icons"
