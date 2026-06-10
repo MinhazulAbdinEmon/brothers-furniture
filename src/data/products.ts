@@ -22,6 +22,7 @@
 //    section: "sofas",                        // which page it appears on:
 //                                             // "sofas" | "fridges" | "ovens"
 //                                             // | "washing-machines" | "wardrobes"
+//                                             // | "dining-tables"
 //    type: "3-seater",                        // filter group (optional)
 //    price: 250,                              // AED number, or null = "ask us"
 //    oldPrice: 600,                           // optional — shown crossed out
@@ -56,7 +57,7 @@ export type SectionId =
   | "ovens"
   | "washing-machines"
   | "wardrobes"
-  | "dinning-tables"
+  | "dining-tables"
 
 export interface ProductEntry {
   /** Unique id, e.g. "sofa-024". Used in WhatsApp messages. */

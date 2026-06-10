@@ -159,17 +159,17 @@ const SECTIONS: SectionConfig[] = [
     defaultTypeLabel: "Wardrobe",
   },
   {
-    slug: "dinning-tables",
-    label: "Dinning",
-    eyebrow: "Dinning Room",
-    title: "Dinning Tables",
+    slug: "dining-tables",
+    label: "Dining",
+    eyebrow: "Dining Room",
+    title: "Dining Tables",
     subtitle: "Tables for family meals.",
     navIcon: (c) => <Utensils className={c} />,
     productIcon: (_v, c) => <Utensils className={c} />,
     typeOrder: [],
     typeLabels: {},
     allLabel: "All",
-    defaultTypeLabel: "Dinning Table",
+    defaultTypeLabel: "Dining Table",
   },
 ]
 
