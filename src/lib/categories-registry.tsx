@@ -158,6 +158,19 @@ const SECTIONS: SectionConfig[] = [
     allLabel: "All",
     defaultTypeLabel: "Wardrobe",
   },
+  {
+    slug: "dinning-tables",
+    label: "Dinning",
+    eyebrow: "Dinning Room",
+    title: "Dinning Tables",
+    subtitle: "Tables for family meals.",
+    navIcon: (c) => <Utensils className={c} />,
+    productIcon: (_v, c) => <Utensils className={c} />,
+    typeOrder: [],
+    typeLabels: {},
+    allLabel: "All",
+    defaultTypeLabel: "Dinning Table",
+  },
 ]
 
 export const CATEGORIES: CategoryDef[] = SECTIONS.map((s) => {
