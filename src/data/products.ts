@@ -94,6 +94,8 @@ export const products: ProductEntry[] = [
     name: "Blue 2-Seater Sofa",
     section: "sofas",
     type: "2-seater",
+    price: 222,
+    oldPrice: 500,
     images: ["/sofas/sofa-001-enhanced.webp"],
     realPhotos: ["/sofas/sofa-001-original-1.webp"],
   },
