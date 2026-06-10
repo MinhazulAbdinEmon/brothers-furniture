@@ -96,7 +96,8 @@ const GlowCard: React.FC<GlowCardProps> = ({
       backgroundAttachment: 'fixed',
       border: 'var(--border-size) solid var(--backup-border)',
       position: 'relative',
-      touchAction: 'none',
+      // NOTE: never set touch-action here — it traps finger scrolling on
+      // phones (the page "gets stuck" when a swipe starts on the card).
     };
 
     if (width !== undefined) {

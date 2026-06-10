@@ -201,7 +201,65 @@ is now structured so this swap only touches one file (`src/lib/catalog.ts`).
 
 ---
 
-## 10. Quick safety rules
+## 10. Add a whole new section (e.g. ACs, Dining Tables…)
+
+A "section" is a page with its own nav link, like Sofas or Fridges. Adding
+one takes **two small edits** — everything else (navbar link, "Shop by
+category" tile, homepage preview, the page itself, the All Products filter)
+appears automatically.
+
+**Edit 1 — `src/data/products.ts`:** find the `SectionId` list near the top
+and add your new section name to it:
+
+```ts
+export type SectionId =
+  | "sofas"
+  | "fridges"
+  | "ovens"
+  | "washing-machines"
+  | "wardrobes"
+  | "acs"          // ← add this line
+```
+
+**Edit 2 — `src/lib/categories-registry.tsx`:** find the `SECTIONS` list,
+copy the whole `wardrobes` block (from its `{` to its `},`), paste it at the
+end of the list, and change the words:
+
+```tsx
+  {
+    slug: "acs",                          // must match what you wrote in Edit 1
+    label: "ACs",                         // navbar + category tile text
+    eyebrow: "Appliances",                // small text above the page title
+    title: "Air Conditioners",            // big page title
+    subtitle: "Stay cool all summer.",    // text under the title
+    navIcon: (c) => <AirVent className={c} />,
+    productIcon: (_v, c) => <AirVent className={c} />,
+    typeOrder: [],
+    typeLabels: {},
+    allLabel: "All",
+    defaultTypeLabel: "Air Conditioner",  // small label on each card
+  },
+```
+
+For the icon: pick any name from **lucide.dev** (e.g. `AirVent`, `Fan`,
+`Lamp`, `Tv`, `Armchair`) and add it to the import line at the top of the
+same file:
+
+```tsx
+import { Sofa, Refrigerator, WashingMachine, AirVent } from "lucide-react"
+```
+
+Then add products with `section: "acs"` in `products.ts` — done. If a
+product gets a `type` (e.g. `type: "split"`), filter buttons appear on the
+page automatically once there are two or more types.
+
+(The only place a new section does NOT appear automatically is the rotating
+photo showcase in the hero at the very top of the homepage — that list is
+hand-picked in `src/components/hero/category-showcase.tsx`.)
+
+---
+
+## 11. Quick safety rules
 
 - Every product needs a **unique `id`** — never two products with the same id.
 - Keep the `{ }` and the `,` after each block exactly as in the template.
