@@ -14,7 +14,7 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { primaryPhone } from "@/lib/site"
-import { formatPrice, shareWithPhoto, type Product } from "@/lib/catalog"
+import { formatPrice, shareProduct, type Product } from "@/lib/catalog"
 import { GalleryImage } from "./gallery-image"
 import { BeforeAfter } from "./before-after"
 
@@ -380,7 +380,7 @@ export function ProductModal({
         <div className="sticky bottom-0 z-20 mt-4 grid grid-cols-2 gap-3 border-t border-border bg-card px-5 py-4">
           <button
             type="button"
-            onClick={() => shareWithPhoto(product)}
+            onClick={() => shareProduct(product)}
             aria-label={`Message us on WhatsApp about ${product.name}, with the photo`}
             className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#25D366] text-base font-semibold text-black transition-transform hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-[0.98]"
           >

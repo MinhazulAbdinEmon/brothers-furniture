@@ -165,8 +165,9 @@ Change it there and the whole website updates (every button, every product).
 
 Each product card already has a green WhatsApp button. It opens WhatsApp with
 a ready message like *"Hello, I am interested in this item: Blue 2-Seater
-Sofa (sofa-001). Is it available?"* plus a link to the photo. To customise the
-message for one product, add:
+Sofa (sofa-001). Is it available?"* plus a link that opens your website with
+that exact product's popup already showing. To customise the message for one
+product, add:
 
 ```js
 whatsappMessage: "Hello! Is the brown leather sofa still available?",

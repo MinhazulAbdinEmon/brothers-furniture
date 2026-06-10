@@ -3,7 +3,7 @@ import { Gem, Camera, Eye, MessageCircle, ImageOff } from "lucide-react"
 import {
   formatPrice,
   heroImage,
-  shareWithPhoto,
+  shareProduct,
   type Product,
 } from "@/lib/catalog"
 import { GalleryImage } from "./gallery-image"
@@ -125,7 +125,7 @@ export function ProductCard({
           </button>
           <button
             type="button"
-            onClick={() => shareWithPhoto(product)}
+            onClick={() => shareProduct(product)}
             aria-label={`Message us on WhatsApp about ${product.name}`}
             className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#25D366] text-black transition-transform hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-[0.98]"
           >

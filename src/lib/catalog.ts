@@ -104,19 +104,24 @@ function inquiryText(p: Product): string {
   )
 }
 
+/** Deep link that opens the product's section page with its details popup
+ *  already open (the gallery reads the ?item= query param on load). */
+export function productUrl(p: Product): string {
+  return `/${p.section}?item=${encodeURIComponent(p.id)}`
+}
+
 /**
  * Open a WhatsApp chat to our business number, pre-filled with the inquiry and
- * a link to the product photo. WhatsApp deep links can target a specific number
- * (so it always reaches us) but can't attach a file, so we include the photo's
- * public URL in the text — WhatsApp renders it as an image preview on the live
- * site. The customer just taps Send.
+ * a link straight to the product. WhatsApp deep links can target a specific
+ * number (so it always reaches us) but can't attach anything, so we include
+ * the product's page URL in the text — tapping it opens the website with that
+ * product's popup (photos, price, contact buttons) already showing.
  */
-export function shareWithPhoto(p: Product): void {
-  const imagePath = heroImage(p)
+export function shareProduct(p: Product): void {
   const base = inquiryText(p)
   const absUrl =
-    imagePath && typeof window !== "undefined"
-      ? new URL(imagePath, window.location.origin).href
+    typeof window !== "undefined"
+      ? new URL(productUrl(p), window.location.origin).href
       : undefined
   const text = absUrl ? `${base}\n${absUrl}` : base
   window.open(waLink(text), "_blank", "noopener,noreferrer")

@@ -59,7 +59,12 @@ export function ProductGallery({
   whatsappCategory,
 }: ProductGalleryProps) {
   const [filter, setFilter] = useState<string | null>(null)
-  const [openId, setOpenId] = useState<string | null>(null)
+  // Deep links from WhatsApp messages: /sofas?item=sofa-001 opens that
+  // product's popup immediately. Each gallery only reacts to its own ids.
+  const [openId, setOpenId] = useState<string | null>(() => {
+    const item = new URLSearchParams(window.location.search).get("item")
+    return item && products.some((p) => p.id === item) ? item : null
+  })
   const [showAll, setShowAll] = useState(false)
 
   const showFilters = !!filters && filters.length > 1
