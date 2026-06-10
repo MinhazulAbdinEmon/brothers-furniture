@@ -277,6 +277,25 @@ export const products: ProductEntry[] = [
     realPhotos: ["/sofas/sofa-023-original-1.webp"],
   },
 
+  {
+    id: "dining-001",
+    name: "6-Seater Wooden Dining Table",
+    section: "dining-tables",
+    price: 350,
+    condition: "Good Condition",
+    images: ["/products/dinningC-1.png"],
+    realPhotos: ["/products/dinningtable-1.jpeg"],
+  },
+  {
+    id: "dining-002",
+    name: "6-Seater Wooden Dining Table",
+    section: "dining-tables",
+    price: 350,
+    condition: "Good Condition",
+    images: ["/products/dinningC-2.png"],
+    realPhotos: ["/products/dinningtable-2.jpeg"],
+  },
+
   // ─────────────────────────── FRIDGES ───────────────────────────
   // type: "silver" | "white"
   {
