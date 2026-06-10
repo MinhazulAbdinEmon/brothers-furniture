@@ -23,7 +23,7 @@
 //                                             // "sofas" | "fridges" | "ovens"
 //                                             // | "washing-machines" | "wardrobes"
 //    type: "3-seater",                        // filter group (optional)
-//    price: 450,                              // AED number, or null = "ask us"
+//    price: 250,                              // AED number, or null = "ask us"
 //    oldPrice: 600,                           // optional — shown crossed out
 //    condition: "Good Condition",             // optional — small text on card
 //    images: ["/products/my-photo.jpg"],      // main photos (first = card photo)
